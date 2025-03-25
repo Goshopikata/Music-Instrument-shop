@@ -1,0 +1,13 @@
+﻿@using MusicShop.Models.Cars
+@using MusicShop.Models.Cars
+@model InstrumentsFormModel
+
+@{
+    ViewBag.Title = "Add Car";
+}
+
+<partial name="_CarFormPartial" model="@Model" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

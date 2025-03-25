@@ -1,0 +1,108 @@
+﻿@using MusicShop.Models.Cars
+@using MusicShop.Models.Cars
+@model InstrumentsFormModel
+
+<div class="custom-row">
+    <div class="custom-col">
+        <h2 class="custom-heading">@ViewBag.Title</h2>
+
+        <form method="post" class="custom-form">
+            <div class="custom-group">
+                <label asp-for="Brand" class="custom-label">Brand</label>
+                <input asp-for="Brand" class="custom-input" placeholder="BMW, Mercedes, etc...">
+                <div asp-validation-for="Brand" class="custom-validation"></div>
+            </div>
+            <div class="custom-group">
+                <label asp-for="Model" class="custom-label">Model</label>
+                <input asp-for="Model" class="custom-input" placeholder="640D, S-Class, etc...">
+                <div asp-validation-for="Model" class="custom-validation"></div>
+            </div>
+            <div class="custom-group">
+                <label asp-for="Description" class="custom-label">Description</label>
+                <textarea asp-for="Description" rows="4" class="custom-input" placeholder="This is the perfect car..."></textarea>
+                <div asp-validation-for="Description" class="custom-validation"></div>
+            </div>
+            <div class="custom-group">
+                <label asp-for="ImageUrl" class="custom-label">Image URL</label>
+                <input asp-for="ImageUrl" class="custom-input" placeholder="Your fine URL here...">
+                <div asp-validation-for="ImageUrl" class="custom-validation"></div>
+            </div>
+            <div class="custom-group">
+                <label asp-for="Year" class="custom-label">Year</label>
+                <input asp-for="Year" class="custom-input" placeholder="@DateTime.UtcNow.Year">
+                <div asp-validation-for="Year" class="custom-validation"></div>
+            </div>
+            <div class="custom-group">
+                <label asp-for="CategoryId" class="custom-label">Category</label>
+                <select asp-for="CategoryId" class="custom-select">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+                <div asp-validation-for="CategoryId" class="custom-validation"></div>
+            </div>
+
+            <button type="submit" class="custom-btn">Save</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .custom-row {
+        display: flex;
+        justify-content: center;
+    }
+
+    .custom-col {
+        width: 70%;
+    }
+
+    .custom-heading {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #007bff;
+    }
+
+    .custom-form {
+        margin-top: 30px;
+    }
+
+    .custom-group {
+        margin-bottom: 20px;
+    }
+
+    .custom-label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .custom-input,
+    .custom-select {
+        width: 100%;
+        padding: 8px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .custom-validation {
+        color: red;
+    }
+
+    .custom-btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        border: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+        .custom-btn:hover {
+            background-color: #0056b3;
+        }
+</style>

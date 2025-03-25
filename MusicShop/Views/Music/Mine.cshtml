@@ -1,0 +1,17 @@
+﻿@using MusicShop.Services.Cars.Models
+@using MusicShop.Services.Cars.Models
+@model IEnumerable<CarServiceModel>
+
+@{
+    ViewBag.Title = "My Cars";
+    ViewBag.AllowCarEdit = true;
+}
+
+@if (!Model.Any())
+{
+    <h2 class="text-center mb-4">You don't have any cars yet!</h2>
+}
+else
+{
+    <partial name="_CarsPartial" model="@Model" />
+}

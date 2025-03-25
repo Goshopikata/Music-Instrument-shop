@@ -1,0 +1,129 @@
+﻿@using MusicShop.Models.Cars
+@using MusicShop.Models.Cars
+@model AllInstrumentsQueryModels
+
+@{
+    ViewBag.Title = "All Cars";
+}
+
+<form method="get" class="custom-form">
+    <div class="custom-row">
+        <div class="custom-col">
+            <label asp-for="Brand" class="custom-label">Brand</label>
+            <select asp-for="Brand" class="custom-select">
+                <option value="">All</option>
+                @foreach (var brand in Model.Brands)
+                {
+                    <option value="@brand">@brand</option>
+                }
+            </select>
+        </div>
+
+        <div class="custom-col">
+            <label asp-for="SearchTerm" class="custom-label">Search Term</label>
+            <input asp-for="SearchTerm" class="custom-input" placeholder="Fender, etc...">
+        </div>
+
+        <div class="custom-col">
+            <label asp-for="Sorting" class="custom-label">Sorting</label>
+            <select asp-for="Sorting" class="custom-select">
+                <option value="0" selected>Date Created</option>
+                <option value="1">Year</option>
+                <option value="2">Brand And Model</option>
+            </select>
+        </div>
+    </div>
+</form>
+
+@{
+    var previousPage = Model.CurrentPage - 1;
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+
+    var maxPage = Math.Ceiling((double)Model.TotalCars / AllInstrumentsQueryModels.CarsPerPage);
+}
+
+<div class="custom-row mb-4">
+    <div class="custom-col">
+        <a class="custom-btn @(Model.CurrentPage == 1 ? "custom-btn-disabled" : string.Empty)"
+           asp-controller="Music"
+           asp-action="All"
+           asp-route-currentPage="@previousPage"
+           asp-route-brand="@Model.Brand"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.Sorting)">&lt;&lt;</a>
+    </div>
+
+    @{
+        var shouldButtonBeDisabled = Model.CurrentPage == maxPage || !Model.Instruments.Any();
+    }
+
+    <div class="custom-col text-end">
+        <a class="custom-btn @(shouldButtonBeDisabled ? "custom-btn-disabled" : string.Empty)"
+           asp-controller="Music"
+           asp-action="All"
+           asp-route-currentPage="@(Model.CurrentPage + 1)"
+           asp-route-brand="@Model.Brand"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.Sorting)">&gt;&gt;</a>
+    </div>
+</div>
+
+@if (!Model.Instruments.Any())
+{
+    <h2 class="custom-text-center">No cars found by the given criteria!</h2>
+}
+
+<partial name="_CarsPartial" model="@Model.Instruments" />
+<style>
+    .custom-form {
+        margin-bottom: 20px;
+    }
+
+    .custom-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .custom-col {
+        flex: 0 0 calc(33.333% - 10px);
+    }
+
+    .custom-label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .custom-input,
+    .custom-select {
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .custom-btn {
+        padding: 10px 20px;
+        background-color: #007bff;
+        border: none;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .custom-btn-disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    .custom-text-center {
+        text-align: center;
+    }
+</style>
