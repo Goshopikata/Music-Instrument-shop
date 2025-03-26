@@ -15,7 +15,7 @@
         {
         }
 
-        public DbSet<Car> Cars { get; init; }
+        public DbSet<Instrument> Cars { get; init; }
 
         public DbSet<Category> Categories { get; init; }
 
@@ -31,14 +31,14 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder
-                .Entity<Car>()
+                .Entity<Instrument>()
                 .HasOne(c => c.Category)
                 .WithMany(c => c.Cars)
                 .HasForeignKey(c => c.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
-                .Entity<Car>()
+                .Entity<Instrument>()
                 .HasOne(c => c.Dealer)
                 .WithMany(d => d.Cars)
                 .HasForeignKey(c => c.DealerId)

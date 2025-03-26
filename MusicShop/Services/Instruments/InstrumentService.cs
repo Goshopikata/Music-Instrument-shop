@@ -8,12 +8,12 @@
     using MusicShop.Data.Models;
     using MusicShop.Services.Cars.Models;
 
-    public class CarService : IInstrumentsService
+    public class InstrumentService : IInstrumentsService
     {
         private readonly RentalDbContext _context;
         private readonly IConfigurationProvider _mapperConfig;
 
-        public CarService(RentalDbContext context, IMapper mapper)
+        public InstrumentService(RentalDbContext context, IMapper mapper)
         {
             _context = context;
             _mapperConfig = mapper.ConfigurationProvider;
@@ -86,7 +86,7 @@
 
         public int Create(string brand, string model, string description, string imageUrl, int year, int categoryId, int dealerId)
         {
-            var car = new Car
+            var car = new Instrument
             {
                 Brand = brand,
                 Model = model,
@@ -156,7 +156,7 @@
             return _context.Categories.Any(c => c.Id == categoryId);
         }
 
-        private IEnumerable<CarServiceModel> GetCars(IQueryable<Car> carQuery)
+        private IEnumerable<CarServiceModel> GetCars(IQueryable<Instrument> carQuery)
         {
             return carQuery.ProjectTo<CarServiceModel>(_mapperConfig).ToList();
         }

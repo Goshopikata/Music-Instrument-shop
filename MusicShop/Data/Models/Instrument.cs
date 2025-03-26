@@ -6,7 +6,7 @@ namespace MusicShop.Data.Models
 
     using static DataConstants.Car;
 
-    public class Car
+    public class Instrument
     {
         public int Id { get; init; }
 

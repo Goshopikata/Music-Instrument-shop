@@ -29,7 +29,7 @@ namespace MusicShop
 
             builder.Services.AddMemoryCache();
 
-            builder.Services.AddTransient<IInstrumentsService, CarService>();
+            builder.Services.AddTransient<IInstrumentsService, InstrumentService>();
             builder.Services.AddTransient<IDealerService, DealerService>();
             builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 
