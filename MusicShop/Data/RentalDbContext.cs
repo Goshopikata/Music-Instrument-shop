@@ -40,7 +40,7 @@
             builder
                 .Entity<Instrument>()
                 .HasOne(c => c.Dealer)
-                .WithMany(d => d.Cars)
+                .WithMany(d => d.Instrument)
                 .HasForeignKey(c => c.DealerId)
                 .OnDelete(DeleteBehavior.Restrict);
 

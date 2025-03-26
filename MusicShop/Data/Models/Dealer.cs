@@ -22,6 +22,6 @@ namespace MusicShop.Data.Models
         [Required]
         public string UserId { get; set; }
 
-        public IEnumerable<Instrument> Cars { get; init; } = new List<Instrument>();
+        public IEnumerable<Instrument> Instrument { get; init; } = new List<Instrument>();
     }
 }
