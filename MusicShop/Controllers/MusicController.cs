@@ -14,30 +14,30 @@ namespace MusicShop.Controllers
 
     public class MusicController : Controller
     {
-        private readonly IInstrumentsService cars;
+        private readonly IInstrumentsService instruments;
         private readonly IDealerService dealers;
         private readonly IMapper mapper;
 
         public MusicController(
-            IInstrumentsService cars,
+            IInstrumentsService instruments,
             IDealerService dealers,
             IMapper mapper)
         {
-            this.cars = cars;
+            this.instruments = instruments;
             this.dealers = dealers;
             this.mapper = mapper;
         }
 
         public IActionResult All([FromQuery] AllInstrumentsQueryModels query)
         {
-            var queryResult = cars.All(
+            var queryResult = instruments.All(
                 query.Brand,
                 query.SearchTerm,
                 query.Sorting,
                 query.CurrentPage,
                 AllInstrumentsQueryModels.CarsPerPage);
 
-            var carBrands = cars.AllBrands();
+            var carBrands = instruments.AllBrands();
 
             query.Brands = carBrands;
             query.TotalCars = queryResult.TotalCars;
@@ -49,14 +49,14 @@ namespace MusicShop.Controllers
         [Authorize]
         public IActionResult Mine()
         {
-            var myCars = cars.ByUser(User.Id());
+            var myCars = instruments.ByUser(User.Id());
 
             return View(myCars);
         }
 
         public IActionResult Details(int id, string information)
         {
-            var car = cars.Details(id);
+            var car = instruments.Details(id);
 
             if (information != car.GetInformation())
             {
@@ -76,7 +76,7 @@ namespace MusicShop.Controllers
 
             return View(new InstrumentsFormModel
             {
-                Categories = cars.AllCategories()
+                Categories = instruments.AllCategories()
             });
         }
 
@@ -91,19 +91,19 @@ namespace MusicShop.Controllers
                 return RedirectToAction(nameof(DealersController.Become), "Dealers");
             }
 
-            if (!cars.CategoryExists(car.CategoryId))
+            if (!instruments.CategoryExists(car.CategoryId))
             {
                 ModelState.AddModelError(nameof(car.CategoryId), "Category does not exist.");
             }
 
             if (!ModelState.IsValid)
             {
-                car.Categories = cars.AllCategories();
+                car.Categories = instruments.AllCategories();
 
                 return View(car);
             }
 
-            var carId = cars.Create(
+            var carId = instruments.Create(
                 car.Brand,
                 car.Model,
                 car.Description,

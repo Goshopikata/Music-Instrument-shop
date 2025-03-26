@@ -24,7 +24,7 @@
             string searchTerm = null,
             InstrumentSorting sorting = InstrumentSorting.DateCreated,
             int currentPage = 1,
-            int carsPerPage = int.MaxValue,
+            int instrumentsPerPage = int.MaxValue,
             bool publicOnly = true)
         {
             var carQuery = _context.Cars.AsQueryable();
@@ -55,14 +55,14 @@
 
             var totalCars = carQuery.Count();
 
-            var cars = GetCars(carQuery.Skip((currentPage - 1) * carsPerPage).Take(carsPerPage));
+            var instruments = GetCars(carQuery.Skip((currentPage - 1) * instrumentsPerPage).Take(instrumentsPerPage));
 
             return new CarQueryServiceModel
             {
                 TotalCars = totalCars,
                 CurrentPage = currentPage,
-                CarsPerPage = carsPerPage,
-                Cars = cars
+                CarsPerPage = instrumentsPerPage,
+                Cars = instruments
             };
         }
 

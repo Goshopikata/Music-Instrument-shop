@@ -24,7 +24,7 @@
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=MusicShopChepBate4;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=MusicShopChepBate6;Trusted_Connection=True;MultipleActiveResultSets=true");
             base.OnConfiguring(optionsBuilder);
         }
 

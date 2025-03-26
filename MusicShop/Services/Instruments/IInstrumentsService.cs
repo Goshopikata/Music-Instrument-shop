@@ -10,7 +10,7 @@
             string searchTerm = null,
             InstrumentSorting sorting = InstrumentSorting.DateCreated,
             int currentPage = 1,
-            int carsPerPage = int.MaxValue,
+            int instrumentsPerPage = int.MaxValue,
             bool publicOnly = true);
 
         IEnumerable<LatestCarServiceModel> Latest();

@@ -10,14 +10,14 @@ namespace MusicShop.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IInstrumentsService cars;
+        private readonly IInstrumentsService instruments;
         private readonly IMemoryCache cache;
 
         public HomeController(
-            IInstrumentsService cars,
+            IInstrumentsService instruments,
             IMemoryCache cache)
         {
-            this.cars = cars;
+            this.instruments = instruments;
             this.cache = cache;
         }
 
@@ -27,7 +27,7 @@ namespace MusicShop.Controllers
 
             if (latestCars == null)
             {
-                latestCars = cars
+                latestCars = instruments
                    .Latest()
                    .ToList();
 
