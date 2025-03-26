@@ -13,7 +13,7 @@
         [Display(Name = "Search by text")]
         public string SearchTerm { get; init; }
 
-        public CarSorting Sorting { get; init; }
+        public InstrumentSorting Sorting { get; init; }
 
         public int CurrentPage { get; init; } = 1;
 

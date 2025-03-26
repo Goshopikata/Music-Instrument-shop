@@ -8,7 +8,7 @@
         CarQueryServiceModel All(
             string brand = null,
             string searchTerm = null,
-            CarSorting sorting = CarSorting.DateCreated,
+            InstrumentSorting sorting = InstrumentSorting.DateCreated,
             int currentPage = 1,
             int carsPerPage = int.MaxValue,
             bool publicOnly = true);

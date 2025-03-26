@@ -1,6 +1,6 @@
 ﻿namespace MusicShop.Services.Cars.Models
 {
-    public enum CarSorting
+    public enum InstrumentSorting
     {
         DateCreated = 0,
         Year = 1,

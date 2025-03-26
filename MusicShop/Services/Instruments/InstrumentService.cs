@@ -22,7 +22,7 @@
         public CarQueryServiceModel All(
             string brand = null,
             string searchTerm = null,
-            CarSorting sorting = CarSorting.DateCreated,
+            InstrumentSorting sorting = InstrumentSorting.DateCreated,
             int currentPage = 1,
             int carsPerPage = int.MaxValue,
             bool publicOnly = true)
@@ -40,11 +40,11 @@
                     (c.Brand + " " + c.Model).ToLower().Contains(searchTerm.ToLower()) ||
                     c.Description.ToLower().Contains(searchTerm.ToLower()));
 
-            if (sorting == CarSorting.Year)
+            if (sorting == InstrumentSorting.Year)
             {
                 carQuery = carQuery.OrderByDescending(c => c.Year);
             }
-            else if (sorting == CarSorting.BrandAndModel)
+            else if (sorting == InstrumentSorting.BrandAndModel)
             {
                 carQuery = carQuery.OrderBy(c => c.Brand).ThenBy(c => c.Model);
             }
