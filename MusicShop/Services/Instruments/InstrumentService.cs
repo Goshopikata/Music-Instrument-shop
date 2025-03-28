@@ -19,7 +19,7 @@
             _mapperConfig = mapper.ConfigurationProvider;
         }
 
-        public CarQueryServiceModel All(
+        public InstrumentQueryServiceModel All(
             string brand = null,
             string searchTerm = null,
             InstrumentSorting sorting = InstrumentSorting.DateCreated,
@@ -57,7 +57,7 @@
 
             var instruments = GetInstruments(carQuery.Skip((currentPage - 1) * instrumentsPerPage).Take(instrumentsPerPage));
 
-            return new CarQueryServiceModel
+            return new InstrumentQueryServiceModel
             {
                 TotalInstruments = totalInstruments,
                 CurrentPage = currentPage,
@@ -66,21 +66,21 @@
             };
         }
 
-        public IEnumerable<LatestCarServiceModel> Latest()
+        public IEnumerable<LatestInstrumentServiceModel> Latest()
         {
             return _context.Instruments
                 .Where(c => c.IsPublic)
                 .OrderByDescending(c => c.Id)
-                .ProjectTo<LatestCarServiceModel>(_mapperConfig)
+                .ProjectTo<LatestInstrumentServiceModel>(_mapperConfig)
                 .Take(3)
                 .ToList();
         }
 
-        public CarDetailsServiceModel Details(int id)
+        public InstrumentDetailsServiceModel Details(int id)
         {
             return _context.Instruments
                 .Where(c => c.Id == id)
-                .ProjectTo<CarDetailsServiceModel>(_mapperConfig)
+                .ProjectTo<InstrumentDetailsServiceModel>(_mapperConfig)
                 .FirstOrDefault();
         }
 
@@ -124,7 +124,7 @@
             return true;
         }
 
-        public IEnumerable<CarServiceModel> ByUser(string userId)
+        public IEnumerable<InstrumentServiceModel> ByUser(string userId)
         {
             return GetInstruments(_context.Instruments.Where(c => c.Dealer.UserId == userId));
         }
@@ -144,10 +144,10 @@
                 .ToList();
         }
 
-        public IEnumerable<CarCategoryServiceModel> AllCategories()
+        public IEnumerable<InstrumentCategoryServiceModel> AllCategories()
         {
             return _context.Categories
-                .ProjectTo<CarCategoryServiceModel>(_mapperConfig)
+                .ProjectTo<InstrumentCategoryServiceModel>(_mapperConfig)
                 .ToList();
         }
 
@@ -156,9 +156,9 @@
             return _context.Categories.Any(c => c.Id == categoryId);
         }
 
-        private IEnumerable<CarServiceModel> GetInstruments(IQueryable<Instrument> carQuery)
+        private IEnumerable<InstrumentServiceModel> GetInstruments(IQueryable<Instrument> carQuery)
         {
-            return carQuery.ProjectTo<CarServiceModel>(_mapperConfig).ToList();
+            return carQuery.ProjectTo<InstrumentServiceModel>(_mapperConfig).ToList();
         }
 
         public void ChangeVisility(int carId)

@@ -1,6 +1,6 @@
 ﻿namespace MusicShop.Services.Instruments.Models
 {
-    public interface ICarModel
+    public interface IInstrumentModel
     {
         string Brand { get; }
 

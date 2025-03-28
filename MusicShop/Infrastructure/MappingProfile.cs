@@ -9,15 +9,15 @@
     {
         public MappingProfile()
         {
-            CreateMap<Category, CarCategoryServiceModel>();
+            CreateMap<Category, InstrumentCategoryServiceModel>();
 
-            CreateMap<Instrument, LatestCarServiceModel>();
-            CreateMap<CarDetailsServiceModel, CarFormModel>();
+            CreateMap<Instrument, LatestInstrumentServiceModel>();
+            CreateMap<InstrumentDetailsServiceModel, CarFormModel>();
 
-            CreateMap<Instrument, CarServiceModel>()
+            CreateMap<Instrument, InstrumentServiceModel>()
                 .ForMember(c => c.CategoryName, cfg => cfg.MapFrom(c => c.Category.Name));
 
-            CreateMap<Instrument, CarDetailsServiceModel>()
+            CreateMap<Instrument, InstrumentDetailsServiceModel>()
                 .ForMember(c => c.UserId, cfg => cfg.MapFrom(c => c.Dealer.UserId))
                 .ForMember(c => c.CategoryName, cfg => cfg.MapFrom(c => c.Category.Name));
         }

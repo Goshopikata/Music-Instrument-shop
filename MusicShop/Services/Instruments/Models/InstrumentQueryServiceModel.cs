@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class CarQueryServiceModel
+    public class InstrumentQueryServiceModel
     {
         public int CurrentPage { get; init; }
 
@@ -10,6 +10,6 @@
 
         public int TotalInstruments { get; init; }
 
-        public IEnumerable<CarServiceModel> Instruments { get; init; }
+        public IEnumerable<InstrumentServiceModel> Instruments { get; init; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace MusicShop.Services.Instruments.Models
 {
-    public class CarCategoryServiceModel
+    public class InstrumentCategoryServiceModel
     {
         public int Id { get; init; }
 

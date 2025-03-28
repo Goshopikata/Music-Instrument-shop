@@ -5,7 +5,7 @@
 
     public interface IInstrumentsService
     {
-        CarQueryServiceModel All(
+        InstrumentQueryServiceModel All(
             string brand = null,
             string searchTerm = null,
             InstrumentSorting sorting = InstrumentSorting.DateCreated,
@@ -13,9 +13,9 @@
             int instrumentsPerPage = int.MaxValue,
             bool publicOnly = true);
 
-        IEnumerable<LatestCarServiceModel> Latest();
+        IEnumerable<LatestInstrumentServiceModel> Latest();
 
-        CarDetailsServiceModel Details(int carId);
+        InstrumentDetailsServiceModel Details(int carId);
 
         int Create(
             string brand,
@@ -36,7 +36,7 @@
             int categoryId,
             bool isPublic);
 
-        IEnumerable<CarServiceModel> ByUser(string userId);
+        IEnumerable<InstrumentServiceModel> ByUser(string userId);
 
         bool IsByDealer(int carId, int dealerId);
 
@@ -44,7 +44,7 @@
 
         IEnumerable<string> AllBrands();
 
-        IEnumerable<CarCategoryServiceModel> AllCategories();
+        IEnumerable<InstrumentCategoryServiceModel> AllCategories();
 
         bool CategoryExists(int categoryId);
     }

@@ -6,7 +6,7 @@
 
     using static MusicShop.Data.DataConstants.Car;
 
-    public class CarFormModel : ICarModel
+    public class CarFormModel : IInstrumentModel
     {
         [Required]
         [StringLength(BrandMaxLength, MinimumLength = BrandMinLength)]
@@ -34,7 +34,7 @@
         [Display(Name = "Category")]
         public int CategoryId { get; init; }
 
-        public IEnumerable<CarCategoryServiceModel> Categories { get; set; }
+        public IEnumerable<InstrumentCategoryServiceModel> Categories { get; set; }
     }
 }
 

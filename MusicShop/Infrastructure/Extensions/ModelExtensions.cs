@@ -4,7 +4,7 @@
 
     public static class ModelExtensions
     {
-        public static string GetInformation(this ICarModel car)
+        public static string GetInformation(this IInstrumentModel car)
             => car.Brand + "-" + car.Model + "-" + car.Year;
     }
 }

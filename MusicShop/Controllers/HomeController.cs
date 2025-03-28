@@ -23,7 +23,7 @@ namespace MusicShop.Controllers
 
         public IActionResult Index()
         {
-            var latestInstruments = cache.Get<List<LatestCarServiceModel>>(WebConstants.LatestInstrumentsCacheKey);
+            var latestInstruments = cache.Get<List<LatestInstrumentServiceModel>>(WebConstants.LatestInstrumentsCacheKey);
 
             if (latestInstruments == null)
             {

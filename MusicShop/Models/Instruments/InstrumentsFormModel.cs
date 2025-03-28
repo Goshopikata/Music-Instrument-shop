@@ -6,7 +6,7 @@
 
     using static MusicShop.Data.DataConstants.Car;
 
-    public class InstrumentsFormModel : ICarModel
+    public class InstrumentsFormModel : IInstrumentModel
     {
         [Required(ErrorMessage = "Brand is mandatory.")]
         [StringLength(BrandMaxLength, MinimumLength = BrandMinLength, ErrorMessage = "Brand length should be between {2} and {1} characters.")]
@@ -30,6 +30,6 @@
 
         public int CategoryId { get; init; }
 
-        public IEnumerable<CarCategoryServiceModel> Categories { get; set; } = new List<CarCategoryServiceModel>();
+        public IEnumerable<InstrumentCategoryServiceModel> Categories { get; set; } = new List<InstrumentCategoryServiceModel>();
     }
 }

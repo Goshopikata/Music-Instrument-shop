@@ -1,6 +1,6 @@
 ﻿namespace MusicShop.Services.Instruments.Models
 {
-    public class CarServiceModel : ICarModel
+    public class LatestInstrumentServiceModel : IInstrumentModel
     {
         public int Id { get; init; }
 
@@ -11,9 +11,5 @@
         public string ImageUrl { get; init; }
 
         public int Year { get; init; }
-
-        public string CategoryName { get; init; }
-
-        public bool IsPublic { get; init; }
     }
 }

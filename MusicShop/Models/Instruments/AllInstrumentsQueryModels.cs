@@ -21,6 +21,6 @@
 
         public IEnumerable<string> Brands { get; set; }
 
-        public IEnumerable<CarServiceModel> Instruments { get; set; }
+        public IEnumerable<InstrumentServiceModel> Instruments { get; set; }
     }
 }
