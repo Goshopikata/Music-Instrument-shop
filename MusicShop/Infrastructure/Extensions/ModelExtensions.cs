@@ -1,6 +1,6 @@
 ﻿namespace MusicShop.Infrastructure.Extensions
 {
-    using MusicShop.Services.Cars.Models;
+    using MusicShop.Services.Instruments.Models;
 
     public static class ModelExtensions
     {

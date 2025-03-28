@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static MusicShop.Data.DataConstants;
 using MusicShop.Data;
-using MusicShop.Services.Cars;
+using MusicShop.Services.Instruments;
 using MusicShop.Infrastructure.Extensions;
 using MusicShop.Services.Statistics;
 using MusicShop.Services.Dealers;
@@ -73,7 +73,7 @@ namespace MusicShop
 
                                endpoints.MapControllerRoute(
                                    name: "Car Details",
-                                   pattern: "/Cars/Details/{id}/{information}",
+                                   pattern: "/Instruments/Details/{id}/{information}",
                                    defaults: new
                                    {
                                        controller = typeof(MusicController).GetControllerName(),

@@ -13,6 +13,6 @@
         [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
-        public IEnumerable<Instrument> Cars { get; init; } = new List<Instrument>();
+        public IEnumerable<Instrument> Instruments { get; init; } = new List<Instrument>();
     }
 }

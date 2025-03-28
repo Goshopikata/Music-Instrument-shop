@@ -1,8 +1,8 @@
-﻿namespace MusicShop.Models.Cars
+﻿namespace MusicShop.Models.Instruments
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using MusicShop.Services.Cars.Models;
+    using MusicShop.Services.Instruments.Models;
 
     using static MusicShop.Data.DataConstants.Car;
 

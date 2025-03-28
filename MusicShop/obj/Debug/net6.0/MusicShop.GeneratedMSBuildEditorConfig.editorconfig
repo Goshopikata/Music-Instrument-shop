@@ -84,12 +84,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTXVzaWNcTWluZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gosho/source/repos/MusicInstrumentShop/Music-Instrument-shop/MusicShop/Views/Music/_CarFormPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTXVzaWNcX0NhckZvcm1QYXJ0aWFsLmNzaHRtbA==
+[C:/Users/Gosho/source/repos/MusicInstrumentShop/Music-Instrument-shop/MusicShop/Views/Music/_InstrumentsFormPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTXVzaWNcX0luc3RydW1lbnRzRm9ybVBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Gosho/source/repos/MusicInstrumentShop/Music-Instrument-shop/MusicShop/Views/Music/_CarsPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTXVzaWNcX0NhcnNQYXJ0aWFsLmNzaHRtbA==
+[C:/Users/Gosho/source/repos/MusicInstrumentShop/Music-Instrument-shop/MusicShop/Views/Music/_InstrumentsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTXVzaWNcX0luc3RydW1lbnRzUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Gosho/source/repos/MusicInstrumentShop/Music-Instrument-shop/MusicShop/Views/Shared/Error.cshtml]

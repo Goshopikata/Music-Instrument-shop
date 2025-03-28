@@ -1,9 +1,9 @@
-﻿@using MusicShop.Models.Cars
-@using MusicShop.Models.Cars
+﻿@using MusicShop.Models.Instruments
+@using MusicShop.Models.Instruments
 @model AllInstrumentsQueryModels
 
 @{
-    ViewBag.Title = "All Cars";
+    ViewBag.Title = "All Instruments";
 }
 
 <form method="get" class="custom-form">
@@ -42,7 +42,7 @@
         previousPage = 1;
     }
 
-    var maxPage = Math.Ceiling((double)Model.TotalCars / AllInstrumentsQueryModels.CarsPerPage);
+    var maxPage = Math.Ceiling((double)Model.TotalInstruments / AllInstrumentsQueryModels.InstrumentsPerPage);
 }
 
 <div class="custom-row mb-4">
@@ -76,7 +76,7 @@
     <h2 class="custom-text-center">No instruments found by the given criteria!</h2>
 }
 
-<partial name="_CarsPartial" model="@Model.Instruments" />
+<partial name="_InstrumentsPartial" model="@Model.Instruments" />
 <style>
     .custom-form {
         margin-bottom: 20px;

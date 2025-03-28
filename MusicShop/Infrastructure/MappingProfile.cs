@@ -2,7 +2,7 @@
 {
     using AutoMapper;
     using MusicShop.Data.Models;
-    using MusicShop.Services.Cars.Models;
+    using MusicShop.Services.Instruments.Models;
 
 
     public class MappingProfile : Profile

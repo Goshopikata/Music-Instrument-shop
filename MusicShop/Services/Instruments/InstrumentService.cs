@@ -1,4 +1,4 @@
-﻿namespace MusicShop.Services.Cars
+﻿namespace MusicShop.Services.Instruments
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -6,7 +6,7 @@
     using AutoMapper.QueryableExtensions;
     using MusicShop.Data;
     using MusicShop.Data.Models;
-    using MusicShop.Services.Cars.Models;
+    using MusicShop.Services.Instruments.Models;
 
     public class InstrumentService : IInstrumentsService
     {
@@ -27,7 +27,7 @@
             int instrumentsPerPage = int.MaxValue,
             bool publicOnly = true)
         {
-            var carQuery = _context.Cars.AsQueryable();
+            var carQuery = _context.Instruments.AsQueryable();
 
             if (publicOnly)
                 carQuery = carQuery.Where(c => c.IsPublic);
@@ -53,22 +53,22 @@
                 carQuery = carQuery.OrderByDescending(c => c.Id);
             }
 
-            var totalCars = carQuery.Count();
+            var totalInstruments = carQuery.Count();
 
-            var instruments = GetCars(carQuery.Skip((currentPage - 1) * instrumentsPerPage).Take(instrumentsPerPage));
+            var instruments = GetInstruments(carQuery.Skip((currentPage - 1) * instrumentsPerPage).Take(instrumentsPerPage));
 
             return new CarQueryServiceModel
             {
-                TotalCars = totalCars,
+                TotalInstruments = totalInstruments,
                 CurrentPage = currentPage,
-                CarsPerPage = instrumentsPerPage,
-                Cars = instruments
+                InstrumentsPerPage = instrumentsPerPage,
+                Instruments = instruments
             };
         }
 
         public IEnumerable<LatestCarServiceModel> Latest()
         {
-            return _context.Cars
+            return _context.Instruments
                 .Where(c => c.IsPublic)
                 .OrderByDescending(c => c.Id)
                 .ProjectTo<LatestCarServiceModel>(_mapperConfig)
@@ -78,7 +78,7 @@
 
         public CarDetailsServiceModel Details(int id)
         {
-            return _context.Cars
+            return _context.Instruments
                 .Where(c => c.Id == id)
                 .ProjectTo<CarDetailsServiceModel>(_mapperConfig)
                 .FirstOrDefault();
@@ -98,7 +98,7 @@
                 IsPublic = false
             };
 
-            _context.Cars.Add(car);
+            _context.Instruments.Add(car);
             _context.SaveChanges();
 
             return car.Id;
@@ -106,7 +106,7 @@
 
         public bool Edit(int id, string brand, string model, string description, string imageUrl, int year, int categoryId, bool isPublic)
         {
-            var car = _context.Cars.Find(id);
+            var car = _context.Instruments.Find(id);
 
             if (car == null)
                 return false;
@@ -126,18 +126,18 @@
 
         public IEnumerable<CarServiceModel> ByUser(string userId)
         {
-            return GetCars(_context.Cars.Where(c => c.Dealer.UserId == userId));
+            return GetInstruments(_context.Instruments.Where(c => c.Dealer.UserId == userId));
         }
 
         public bool IsByDealer(int carId, int dealerId)
         {
-            return _context.Cars.Any(c => c.Id == carId && c.DealerId == dealerId);
+            return _context.Instruments.Any(c => c.Id == carId && c.DealerId == dealerId);
         }
 
 
         public IEnumerable<string> AllBrands()
         {
-            return _context.Cars
+            return _context.Instruments
                 .Select(c => c.Brand)
                 .Distinct()
                 .OrderBy(brand => brand)
@@ -156,14 +156,14 @@
             return _context.Categories.Any(c => c.Id == categoryId);
         }
 
-        private IEnumerable<CarServiceModel> GetCars(IQueryable<Instrument> carQuery)
+        private IEnumerable<CarServiceModel> GetInstruments(IQueryable<Instrument> carQuery)
         {
             return carQuery.ProjectTo<CarServiceModel>(_mapperConfig).ToList();
         }
 
         public void ChangeVisility(int carId)
         {
-            var car = _context.Cars.Find(carId);
+            var car = _context.Instruments.Find(carId);
 
             if (car != null)
             {

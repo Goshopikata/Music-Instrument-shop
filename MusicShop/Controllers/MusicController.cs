@@ -8,8 +8,8 @@ namespace MusicShop.Controllers
 
     using static WebConstants;
     using MusicShop.Infrastructure.Extensions;
-    using MusicShop.Services.Cars;
-    using MusicShop.Models.Cars;
+    using MusicShop.Services.Instruments;
+    using MusicShop.Models.Instruments;
     using MusicShop.Services.Dealers;
 
     public class MusicController : Controller
@@ -35,13 +35,13 @@ namespace MusicShop.Controllers
                 query.SearchTerm,
                 query.Sorting,
                 query.CurrentPage,
-                AllInstrumentsQueryModels.CarsPerPage);
+                AllInstrumentsQueryModels.InstrumentsPerPage);
 
             var carBrands = instruments.AllBrands();
 
             query.Brands = carBrands;
-            query.TotalCars = queryResult.TotalCars;
-            query.Instruments = queryResult.Cars;
+            query.TotalInstruments = queryResult.TotalInstruments;
+            query.Instruments = queryResult.Instruments;
 
             return View(query);
         }
@@ -49,9 +49,9 @@ namespace MusicShop.Controllers
         [Authorize]
         public IActionResult Mine()
         {
-            var myCars = instruments.ByUser(User.Id());
+            var myInstruments = instruments.ByUser(User.Id());
 
-            return View(myCars);
+            return View(myInstruments);
         }
 
         public IActionResult Details(int id, string information)

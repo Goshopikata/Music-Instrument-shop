@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using System.Diagnostics;
 using MusicShop;
-using MusicShop.Services.Cars.Models;
-using MusicShop.Services.Cars;
+using MusicShop.Services.Instruments.Models;
+using MusicShop.Services.Instruments;
 
 namespace MusicShop.Controllers
 {
@@ -23,21 +23,21 @@ namespace MusicShop.Controllers
 
         public IActionResult Index()
         {
-            var latestCars = cache.Get<List<LatestCarServiceModel>>(WebConstants.LatestCarsCacheKey);
+            var latestInstruments = cache.Get<List<LatestCarServiceModel>>(WebConstants.LatestInstrumentsCacheKey);
 
-            if (latestCars == null)
+            if (latestInstruments == null)
             {
-                latestCars = instruments
+                latestInstruments = instruments
                    .Latest()
                    .ToList();
 
                 var cacheOptions = new MemoryCacheEntryOptions()
                     .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
 
-                cache.Set(WebConstants.LatestCarsCacheKey, latestCars, cacheOptions);
+                cache.Set(WebConstants.LatestInstrumentsCacheKey, latestInstruments, cacheOptions);
             }
 
-            return View(latestCars);
+            return View(latestInstruments);
         }
 
         public IActionResult Error() => View();

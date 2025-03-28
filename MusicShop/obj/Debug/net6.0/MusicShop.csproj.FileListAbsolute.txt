@@ -270,8 +270,8 @@ C:\Users\Gosho\Documents\Car3\MusicShop\obj\Debug\net6.0\MusicShop.genruntimecon
 C:\Users\Gosho\Documents\Car3\MusicShop\obj\Debug\net6.0\ref\MusicShop.dll
 C:\Users\Gosho\source\repos\MusicInstrumentShop\Music-Instrument-shop\MusicShop\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\Gosho\source\repos\MusicInstrumentShop\Music-Instrument-shop\MusicShop\bin\Debug\net6.0\appsettings.json
-C:\Users\Gosho\source\repos\MusicInstrumentShop\Music-Instrument-shop\MusicShop\bin\Debug\net6.0\MusicShop.staticwebassets.endpoints.json
 C:\Users\Gosho\source\repos\MusicInstrumentShop\Music-Instrument-shop\MusicShop\bin\Debug\net6.0\MusicShop.staticwebassets.runtime.json
+C:\Users\Gosho\source\repos\MusicInstrumentShop\Music-Instrument-shop\MusicShop\bin\Debug\net6.0\MusicShop.staticwebassets.endpoints.json
 C:\Users\Gosho\source\repos\MusicInstrumentShop\Music-Instrument-shop\MusicShop\bin\Debug\net6.0\MusicShop.exe
 C:\Users\Gosho\source\repos\MusicInstrumentShop\Music-Instrument-shop\MusicShop\bin\Debug\net6.0\MusicShop.deps.json
 C:\Users\Gosho\source\repos\MusicInstrumentShop\Music-Instrument-shop\MusicShop\bin\Debug\net6.0\MusicShop.runtimeconfig.json

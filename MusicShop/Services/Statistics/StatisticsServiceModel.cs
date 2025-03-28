@@ -2,7 +2,7 @@
 {
     public class StatisticsServiceModel
     {
-        public int TotalCars { get; init; }
+        public int TotalInstruments { get; init; }
 
         public int TotalUsers { get; init; }
 

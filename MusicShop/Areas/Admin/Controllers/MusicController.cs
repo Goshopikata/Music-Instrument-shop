@@ -1,7 +1,7 @@
 ﻿namespace MusicShop.Areas.Admin.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using MusicShop.Services.Cars;
+    using MusicShop.Services.Instruments;
 
     public class MusicController : AdminController
     {
@@ -13,7 +13,7 @@
         {
             var inst = this.inst
                 .All(publicOnly: false)
-                .Cars;
+                .Instruments;
 
             return View(inst);
         }

@@ -251,7 +251,7 @@ namespace MusicShop.Migrations
 
                     b.HasIndex("DealerId");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Instruments");
                 });
 
             modelBuilder.Entity("MusicShop.Data.Models.User", b =>
@@ -387,7 +387,7 @@ namespace MusicShop.Migrations
             modelBuilder.Entity("MusicShop.Data.Models.Instrument", b =>
                 {
                     b.HasOne("MusicShop.Data.Models.Category", "Category")
-                        .WithMany("Cars")
+                        .WithMany("Instruments")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -405,7 +405,7 @@ namespace MusicShop.Migrations
 
             modelBuilder.Entity("MusicShop.Data.Models.Category", b =>
                 {
-                    b.Navigation("Cars");
+                    b.Navigation("Instruments");
                 });
 
             modelBuilder.Entity("MusicShop.Data.Models.Dealer", b =>

@@ -190,7 +190,7 @@ namespace MusicShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cars",
+                name: "Instruments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -206,15 +206,15 @@ namespace MusicShop.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cars", x => x.Id);
+                    table.PrimaryKey("PK_Instruments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cars_Categories_CategoryId",
+                        name: "FK_Instruments_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Cars_Dealers_DealerId",
+                        name: "FK_Instruments_Dealers_DealerId",
                         column: x => x.DealerId,
                         principalTable: "Dealers",
                         principalColumn: "Id",
@@ -261,20 +261,20 @@ namespace MusicShop.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cars_CategoryId",
-                table: "Cars",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cars_DealerId",
-                table: "Cars",
-                column: "DealerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Dealers_UserId",
                 table: "Dealers",
                 column: "UserId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Instruments_CategoryId",
+                table: "Instruments",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Instruments_DealerId",
+                table: "Instruments",
+                column: "DealerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -295,7 +295,7 @@ namespace MusicShop.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Cars");
+                name: "Instruments");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

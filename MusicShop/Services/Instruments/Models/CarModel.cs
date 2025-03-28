@@ -1,4 +1,4 @@
-﻿namespace MusicShop.Services.Cars.Models
+﻿namespace MusicShop.Services.Instruments.Models
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

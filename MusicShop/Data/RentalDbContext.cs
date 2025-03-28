@@ -15,7 +15,7 @@
         {
         }
 
-        public DbSet<Instrument> Cars { get; init; }
+        public DbSet<Instrument> Instruments { get; init; }
 
         public DbSet<Category> Categories { get; init; }
 
@@ -33,7 +33,7 @@
             builder
                 .Entity<Instrument>()
                 .HasOne(c => c.Category)
-                .WithMany(c => c.Cars)
+                .WithMany(c => c.Instruments)
                 .HasForeignKey(c => c.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 

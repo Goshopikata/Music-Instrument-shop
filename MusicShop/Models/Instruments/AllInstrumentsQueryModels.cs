@@ -1,12 +1,12 @@
-﻿namespace MusicShop.Models.Cars
+﻿namespace MusicShop.Models.Instruments
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using MusicShop.Services.Cars.Models;
+    using MusicShop.Services.Instruments.Models;
 
     public class AllInstrumentsQueryModels
     {
-        public const int CarsPerPage = 3;
+        public const int InstrumentsPerPage = 3;
 
         public string Brand { get; init; }
 
@@ -17,7 +17,7 @@
 
         public int CurrentPage { get; init; } = 1;
 
-        public int TotalCars { get; set; }
+        public int TotalInstruments { get; set; }
 
         public IEnumerable<string> Brands { get; set; }
 

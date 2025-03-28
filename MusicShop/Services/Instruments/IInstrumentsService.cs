@@ -1,7 +1,7 @@
-﻿namespace MusicShop.Services.Cars
+﻿namespace MusicShop.Services.Instruments
 {
     using System.Collections.Generic;
-    using MusicShop.Services.Cars.Models;
+    using MusicShop.Services.Instruments.Models;
 
     public interface IInstrumentsService
     {

@@ -54,7 +54,7 @@ namespace MusicShop.Controllers
 
             TempData[GlobalMessageKey] = "Thank you for becomming a dealer!";
 
-            return RedirectToAction(nameof(MusicController.All), "Cars");
+            return RedirectToAction(nameof(MusicController.All), "Instruments");
         }
     }
 }

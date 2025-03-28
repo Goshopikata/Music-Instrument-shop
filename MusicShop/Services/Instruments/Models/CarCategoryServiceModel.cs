@@ -1,4 +1,4 @@
-﻿namespace MusicShop.Services.Cars.Models
+﻿namespace MusicShop.Services.Instruments.Models
 {
     public class CarCategoryServiceModel
     {

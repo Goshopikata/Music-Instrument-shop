@@ -1,7 +1,7 @@
 ﻿@using MusicShop.Infrastructure.Extensions
-@using MusicShop.Services.Cars.Models
+@using MusicShop.Services.Instruments.Models
 @using MusicShop.Infrastructure.Extensions
-@using MusicShop.Services.Cars.Models
+@using MusicShop.Services.Instruments.Models
 @model IEnumerable<CarServiceModel>
 
 <div class="custom-row">
@@ -13,7 +13,7 @@
                 <div class="custom-card-body">
                     <h5 class="custom-card-title">@car.Year @car.Brand @car.Model (@car.CategoryName)</h5>
                     <div class="custom-btn-container">
-                        <a asp-controller="Cars" asp-action="Details" asp-route-id="@car.Id" asp-route-information="@car.GetInformation()" class="custom-btn">View</a>
+                        <a asp-controller="Instruments" asp-action="Details" asp-route-id="@car.Id" asp-route-information="@car.GetInformation()" class="custom-btn">View</a>
                     </div>
                 </div>
             </div>

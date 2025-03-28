@@ -1,4 +1,4 @@
-﻿namespace MusicShop.Services.Cars.Models
+﻿namespace MusicShop.Services.Instruments.Models
 {
     using System.Collections.Generic;
 
@@ -6,10 +6,10 @@
     {
         public int CurrentPage { get; init; }
 
-        public int CarsPerPage { get; init; }
+        public int InstrumentsPerPage { get; init; }
 
-        public int TotalCars { get; init; }
+        public int TotalInstruments { get; init; }
 
-        public IEnumerable<CarServiceModel> Cars { get; init; }
+        public IEnumerable<CarServiceModel> Instruments { get; init; }
     }
 }
