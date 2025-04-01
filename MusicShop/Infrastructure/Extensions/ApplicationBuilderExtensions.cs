@@ -45,13 +45,13 @@
 
             data.Categories.AddRange(new[]
             {
-                new Category { Name = "Mini" },
-                new Category { Name = "Economy" },
-                new Category { Name = "Midsize" },
+                new Category { Name = "Stringed" },
+                new Category { Name = "Keyboard" },
+                new Category { Name = "Wind" },
                 new Category { Name = "Large" },
-                new Category { Name = "SUV" },
-                new Category { Name = "Vans" },
-                new Category { Name = "Luxury" },
+                new Category { Name = "Brass" },
+                new Category { Name = "Drums" },
+                new Category { Name = "Marching" },
             });
 
             data.SaveChanges();
