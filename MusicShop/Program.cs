@@ -72,7 +72,7 @@ namespace MusicShop
                 endpoints.MapDefaultAreaRoute();
 
                 endpoints.MapControllerRoute(
-                    name: "Car Details",
+                    name: "Instruments Details",
                     pattern: "/Instruments/Details/{id}/{information}",
                     defaults: new
                     {
