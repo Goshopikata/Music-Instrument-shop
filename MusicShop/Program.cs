@@ -62,26 +62,26 @@ namespace MusicShop
             }
 
             app
-                           .UseHttpsRedirection()
-                           .UseStaticFiles()
-                           .UseRouting()
-                           .UseAuthentication()
-                           .UseAuthorization()
-                           .UseEndpoints(endpoints =>
-                           {
-                               endpoints.MapDefaultAreaRoute();
+            .UseHttpsRedirection()
+            .UseStaticFiles()
+            .UseRouting()
+            .UseAuthentication()
+            .UseAuthorization()
+            .UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultAreaRoute();
 
-                               endpoints.MapControllerRoute(
-                                   name: "Car Details",
-                                   pattern: "/Instruments/Details/{id}/{information}",
-                                   defaults: new
-                                   {
-                                       controller = typeof(MusicController).GetControllerName(),
-                                       action = nameof(MusicController.Details)
-                                   });
+                endpoints.MapControllerRoute(
+                    name: "Car Details",
+                    pattern: "/Instruments/Details/{id}/{information}",
+                    defaults: new
+                    {
+                        controller = typeof(MusicController).GetControllerName(),
+                        action = nameof(MusicController.Details)
+                    });
 
-                               endpoints.MapDefaultControllerRoute();
-                               endpoints.MapRazorPages();
+                endpoints.MapDefaultControllerRoute();
+                endpoints.MapRazorPages();
                            });
             app.Run();
         }

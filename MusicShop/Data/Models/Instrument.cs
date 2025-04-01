@@ -19,7 +19,7 @@ namespace MusicShop.Data.Models
         public string Model { get; set; }
 
         [Required]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Required]
         public string ImageUrl { get; set; }
@@ -30,7 +30,7 @@ namespace MusicShop.Data.Models
 
         public int CategoryId { get; set; }
 
-        public Category Category { get; init; }
+        public Category Category { get; init; } = null!;
 
         public int DealerId { get; init; }
 
