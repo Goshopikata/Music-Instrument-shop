@@ -37,9 +37,9 @@ namespace MusicShop.Controllers
                 query.CurrentPage,
                 AllInstrumentsQueryModels.InstrumentsPerPage);
 
-            var carBrands = instruments.AllBrands();
+            var instrumentsBrands = instruments.AllBrands();
 
-            query.Brands = carBrands;
+            query.Brands = instrumentsBrands;
             query.TotalInstruments = queryResult.TotalInstruments;
             query.Instruments = queryResult.Instruments;
 
