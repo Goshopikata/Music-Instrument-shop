@@ -22,7 +22,7 @@ namespace MusicShop.Data.Models
         public string Description { get; set; } = string.Empty;
 
         [Required]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
         public int Year { get; set; }
 
@@ -34,6 +34,6 @@ namespace MusicShop.Data.Models
 
         public int DealerId { get; init; }
 
-        public Dealer Dealer { get; init; }
+        public Dealer Dealer { get; init; } = null!;
     }
 }
