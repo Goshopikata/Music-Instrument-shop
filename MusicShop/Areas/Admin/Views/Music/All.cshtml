@@ -3,10 +3,10 @@
 @model IEnumerable<InstrumentServiceModel>
 
 @{
-    ViewBag.Title = "Car Management";
+    ViewBag.Title = "Instrument Management";
 }
 
-<h1 style="color: #007bff;">Car List</h1>
+<h1 style="color: #007bff;">Instrument List</h1>
 
 <div style="overflow-x: auto;">
     <table class="custom-table">
@@ -22,18 +22,18 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var car in Model)
+            @foreach (var instrument in Model)
             {
                 <tr>
-                    <td>@car.Id</td>
-                    <td>@car.Brand</td>
-                    <td>@car.Model</td>
-                    <td>@car.Year</td>
-                    <td>@car.CategoryName</td>
-                    <td>@(car.IsPublic ? "Yes" : "No")</td>
+                    <td>@instrument.Id</td>
+                    <td>@instrument.Brand</td>
+                    <td>@instrument.Model</td>
+                    <td>@instrument.Year</td>
+                    <td>@instrument.CategoryName</td>
+                    <td>@(instrument.IsPublic ? "Yes" : "No")</td>
                     <td>
-                        <a asp-area="Admin" asp-controller="Instruments" asp-action="ChangeVisibility" asp-route-id="@car.Id" class="custom-btn">@((car.IsPublic) ? "Hide" : "Show")</a>
-                        <a asp-area="" asp-controller="Instruments" asp-action="Details" asp-route-id="@car.Id" asp-route-information="@car.GetInformation()" class="custom-btn">View</a>
+                        <a asp-area="Admin" asp-controller="Instruments" asp-action="ChangeVisibility" asp-route-id="@instrument.Id" class="custom-btn">@((instrument.IsPublic) ? "Hide" : "Show")</a>
+                        <a asp-area="" asp-controller="Instruments" asp-action="Details" asp-route-id="@instrument.Id" asp-route-information="@instrument.GetInformation()" class="custom-btn">View</a>
                     </td>
                 </tr>
             }

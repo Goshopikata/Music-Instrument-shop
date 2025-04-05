@@ -4,15 +4,15 @@
 @model IEnumerable<InstrumentServiceModel>
 
 <div class="custom-row">
-    @foreach (var car in Model)
+    @foreach (var instrument in Model)
     {
         <div class="custom-col">
             <div class="custom-card">
-                <img class="custom-img" src="@car.ImageUrl" alt="@car.Brand @car.Model - @car.Year (@car.CategoryName)">
+                <img class="custom-img" src="@instrument.ImageUrl" alt="@instrument.Brand @instrument.Model - @instrument.Year (@instrument.CategoryName)">
                 <div class="custom-card-body">
-                    <h5 class="custom-card-title">@car.Year @car.Brand @car.Model (@car.CategoryName)</h5>
+                    <h5 class="custom-card-title">@instrument.Year @instrument.Brand @instrument.Model (@instrument.CategoryName)</h5>
                     <div class="custom-btn-container">
-                        <a asp-controller="Instruments" asp-action="Details" asp-route-id="@car.Id" asp-route-information="@car.GetInformation()" class="custom-btn">View</a>
+                        <a asp-controller="Music" asp-action="Details" asp-route-id="@instrument.Id" asp-route-information="@instrument.GetInformation()" class="custom-btn">View</a>
                     </div>
                 </div>
             </div>

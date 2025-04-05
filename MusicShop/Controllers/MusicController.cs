@@ -56,14 +56,14 @@ namespace MusicShop.Controllers
 
         public IActionResult Details(int id, string information)
         {
-            var car = instruments.Details(id);
+            var instrument = instruments.Details(id);
 
-            if (information != car.GetInformation())
+            if (information != instrument.GetInformation())
             {
                 return BadRequest();
             }
 
-            return View(car);
+            return View(instrument);
         }
 
         [Authorize]
@@ -82,7 +82,7 @@ namespace MusicShop.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Add(InstrumentsFormModel car)
+        public IActionResult Add(InstrumentsFormModel instrument)
         {
             var dealerId = dealers.IdByUser(User.Id());
 
@@ -91,30 +91,30 @@ namespace MusicShop.Controllers
                 return RedirectToAction(nameof(DealersController.Become), "Dealers");
             }
 
-            if (!instruments.CategoryExists(car.CategoryId))
+            if (!instruments.CategoryExists(instrument.CategoryId))
             {
-                ModelState.AddModelError(nameof(car.CategoryId), "Category does not exist.");
+                ModelState.AddModelError(nameof(instrument.CategoryId), "Category does not exist.");
             }
 
             if (!ModelState.IsValid)
             {
-                car.Categories = instruments.AllCategories();
+                instrument.Categories = instruments.AllCategories();
 
-                return View(car);
+                return View(instrument);
             }
 
-            var carId = instruments.Create(
-                car.Brand,
-                car.Model,
-                car.Description,
-                car.ImageUrl,
-                car.Year,
-                car.CategoryId,
+            var instrumentId = instruments.Create(
+                instrument.Brand,
+                instrument.Model,
+                instrument.Description,
+                instrument.ImageUrl,
+                instrument.Year,
+                instrument.CategoryId,
                 dealerId);
 
-            TempData[GlobalMessageKey] = "You car was added and is awaiting for approval!";
+            TempData[GlobalMessageKey] = "You instrument was added and is awaiting for approval!";
 
-            return RedirectToAction(nameof(Details), new { id = carId, information = car.GetInformation() });
+            return RedirectToAction(nameof(Details), new { id = instrumentId, information = instrument.GetInformation() });
         }
     }
 }
