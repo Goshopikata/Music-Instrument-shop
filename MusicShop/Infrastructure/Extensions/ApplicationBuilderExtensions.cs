@@ -48,7 +48,7 @@
                 new Category { Name = "Stringed" },
                 new Category { Name = "Keyboard" },
                 new Category { Name = "Wind" },
-                new Category { Name = "Large" },
+                new Category { Name = "Harp" },
                 new Category { Name = "Brass" },
                 new Category { Name = "Drums" },
                 new Category { Name = "Marching" },
