@@ -116,7 +116,11 @@ namespace MusicShop.Tests.Controllers
             Assert.IsInstanceOf<InstrumentsFormModel>(result.Model);
         }
 
-        
+        [TearDown]
+        public void Teardown()
+        {
+            _controller.Dispose();
+        }
 
         private class FakeInstrumentsService : IInstrumentsService
         {
@@ -146,6 +150,31 @@ namespace MusicShop.Tests.Controllers
             public bool CategoryExists(int categoryId) => CategoryExistsResult;
 
             public int Create(string brand, string model, string description, string imageUrl, int year, int categoryId, int dealerId) => 1;
+
+            public InstrumentQueryServiceModel All(string brand = null, string searchTerm = null, InstrumentSorting sorting = InstrumentSorting.DateCreated, int currentPage = 1, int instrumentsPerPage = int.MaxValue, bool publicOnly = true)
+            {
+                throw new NotImplementedException();
+            }
+
+            public IEnumerable<LatestInstrumentServiceModel> Latest()
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool Edit(int carId, string brand, string model, string description, string imageUrl, int year, int categoryId, bool isPublic)
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool IsByDealer(int carId, int dealerId)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void ChangeVisility(int carId)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         private class FakeDealerService : IDealerService

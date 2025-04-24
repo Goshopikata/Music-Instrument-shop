@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7zaHenLZfZA=",
+  "dgSpecHash": "G7rdDApl83A=",
   "success": true,
   "projectFilePath": "C:\\Users\\Gosho\\Documents\\Final Project\\Music-Instrument-shop\\MusicShop.Tests\\MusicShop.Tests.csproj",
   "expectedPackageFiles": [
@@ -89,6 +89,7 @@
     "C:\\Users\\Gosho\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.29\\microsoft.entityframeworkcore.6.0.29.nupkg.sha512",
     "C:\\Users\\Gosho\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.29\\microsoft.entityframeworkcore.abstractions.6.0.29.nupkg.sha512",
     "C:\\Users\\Gosho\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.29\\microsoft.entityframeworkcore.analyzers.6.0.29.nupkg.sha512",
+    "C:\\Users\\Gosho\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\6.0.29\\microsoft.entityframeworkcore.inmemory.6.0.29.nupkg.sha512",
     "C:\\Users\\Gosho\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.29\\microsoft.entityframeworkcore.relational.6.0.29.nupkg.sha512",
     "C:\\Users\\Gosho\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\6.0.29\\microsoft.entityframeworkcore.sqlserver.6.0.29.nupkg.sha512",
     "C:\\Users\\Gosho\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
