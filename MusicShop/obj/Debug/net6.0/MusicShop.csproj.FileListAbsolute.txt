@@ -1352,3 +1352,4 @@ C:\Users\Gosho\Documents\Test\Music-Instrument-shop\MusicShop\obj\Debug\net6.0\r
 C:\Users\Gosho\Documents\Test\Music-Instrument-shop\MusicShop\obj\Debug\net6.0\MusicShop.pdb
 C:\Users\Gosho\Documents\Test\Music-Instrument-shop\MusicShop\obj\Debug\net6.0\MusicShop.genruntimeconfig.cache
 C:\Users\Gosho\Documents\Test\Music-Instrument-shop\MusicShop\obj\Debug\net6.0\ref\MusicShop.dll
+C:\Users\Gosho\Documents\Final Project\Music-Instrument-shop\MusicShop\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.InMemory.dll

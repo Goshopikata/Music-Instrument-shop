@@ -324,6 +324,33 @@ namespace MusicShop.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("WishlistItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("AddedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("InstrumentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstrumentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("WishlistItem");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -403,6 +430,25 @@ namespace MusicShop.Migrations
                     b.Navigation("Dealer");
                 });
 
+            modelBuilder.Entity("WishlistItem", b =>
+                {
+                    b.HasOne("MusicShop.Data.Models.Instrument", "Instrument")
+                        .WithMany("wishlistItems")
+                        .HasForeignKey("InstrumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MusicShop.Data.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Instrument");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("MusicShop.Data.Models.Category", b =>
                 {
                     b.Navigation("Instruments");
@@ -411,6 +457,11 @@ namespace MusicShop.Migrations
             modelBuilder.Entity("MusicShop.Data.Models.Dealer", b =>
                 {
                     b.Navigation("Instrument");
+                });
+
+            modelBuilder.Entity("MusicShop.Data.Models.Instrument", b =>
+                {
+                    b.Navigation("wishlistItems");
                 });
 #pragma warning restore 612, 618
         }
