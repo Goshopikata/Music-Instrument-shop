@@ -32,8 +32,8 @@
                     <td>@instrument.CategoryName</td>
                     <td>@(instrument.IsPublic ? "Yes" : "No")</td>
                     <td>
-                        <a asp-area="Admin" asp-controller="Instruments" asp-action="ChangeVisibility" asp-route-id="@instrument.Id" class="custom-btn">@((instrument.IsPublic) ? "Hide" : "Show")</a>
-                        <a asp-area="" asp-controller="Instruments" asp-action="Details" asp-route-id="@instrument.Id" asp-route-information="@instrument.GetInformation()" class="custom-btn">View</a>
+                        <a asp-area="Admin" asp-controller="Music" asp-action="ChangeVisibility" asp-route-id="@instrument.Id" class="custom-btn">@((instrument.IsPublic) ? "Hide" : "Show")</a>
+                        <a asp-area="" asp-controller="Music" asp-action="Details" asp-route-id="@instrument.Id" asp-route-information="@instrument.GetInformation()" class="custom-btn">View</a>
                     </td>
                 </tr>
             }
