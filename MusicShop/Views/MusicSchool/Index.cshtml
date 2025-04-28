@@ -23,10 +23,33 @@
             <p class="mb-0 text-center"><strong>⏰ Opening Hours:</strong> 8:00 AM – 8:00 PM</p>
         </div>
 
-        <div class="text-center">
+        <div class="text-center mb-4">
             <a href="/MusicSchool/Enroll" class="btn btn-lg btn-primary rounded-pill px-5 py-2">
                 Enroll Now
             </a>
         </div>
+
+        <div class="bg-light p-4 rounded-4 shadow-sm">
+            <h3 class="mb-4 text-primary text-center">Available Lessons</h3>
+
+            <div class="row">
+                @foreach (var instrument in new[] { "Guitar", "Electric Guitar", "Bass", "Drums", "Violin", "Harp", "Saxophone", "Trumpet", "Accordion", "Flute", "Cello", "Piano" })
+                {
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 shadow-sm border-0 rounded-4">
+                            <div class="card-body text-center">
+                                <h4 class="card-title text-primary">@instrument Lessons</h4>
+                                <ul class="list-unstyled mt-3">
+                                    <li><span class="badge bg-success">Beginner</span></li>
+                                    <li><span class="badge bg-warning text-dark">Intermediate</span></li>
+                                    <li><span class="badge bg-danger">Experienced</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
     </div>
 </div>
