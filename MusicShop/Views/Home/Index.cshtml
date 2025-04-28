@@ -1,15 +1,28 @@
-﻿@using MusicShop.Services.Instruments.Models
-@using MusicShop.Infrastructure.Extensions
-@using MusicShop.Services.Instruments.Models
-@model List<LatestInstrumentServiceModel>
-
-@{
-    ViewBag.Title = "Welcome!";
+﻿@{
+    ViewData["Title"] = "Home Page";
 }
 
-<h1>Welcome to the Instrument Shop system</h1>
+<style>
+    .hero-title {
+        text-align: center;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        font-size: 3rem;
+        font-weight: bold;
+    }
 
-<div class="mb-5"></div>
+    .hero-image {
+        background-image: url('https://cdn.shopify.com/s/files/1/0147/1256/9910/files/DanvilleMusicStore_DisplayRoom8000_Retouched_1024x1024.jpg?v=1652374288');
+        background-size: cover;
+        background-position: center;
+        height: 90vh;
+        border-radius: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+</style>
 
+<div class="container mt-5">
+    <h1 class="hero-title">Welcome to Soundwave</h1>
 
-<div class="mb-5"></div>
+    <div class="hero-image"></div>
+</div>
