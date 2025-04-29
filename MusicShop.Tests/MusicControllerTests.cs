@@ -1,190 +1,129 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using MusicShop.Controllers;
-using MusicShop.Data;
-using MusicShop.Data.Models;
-using MusicShop.Models.Instruments;
-using MusicShop.Services.Dealers;
 using MusicShop.Services.Instruments;
 using MusicShop.Services.Instruments.Models;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 
 namespace MusicShop.Tests.Controllers
 {
     [TestFixture]
-    public class MusicControllerTests
+    public class HomeControllerTests
     {
-        private RentalDbContext _context;
-        private FakeInstrumentsService _instrumentService;
-        private FakeDealerService _dealerService;
-        private MusicController _controller;
+        private HomeController _controller;
+        private FakeInstrumentsService _fakeInstrumentService;
+        private IMemoryCache _memoryCache;
 
         [SetUp]
         public void Setup()
         {
-            var options = new DbContextOptionsBuilder<RentalDbContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                .Options;
-
-            _context = new RentalDbContext(options);
-            _instrumentService = new FakeInstrumentsService();
-            _dealerService = new FakeDealerService();
-
-            _controller = new MusicController(
-                _instrumentService,
-                _dealerService,
-                mapper: null
-            );
-
-            var user = new ClaimsPrincipal(new ClaimsIdentity(new[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, "test-user-id")
-            }, "mock"));
-
-            _controller.ControllerContext = new ControllerContext
-            {
-                HttpContext = new DefaultHttpContext { User = user }
-            };
+            _fakeInstrumentService = new FakeInstrumentsService();
+            _memoryCache = new MemoryCache(new MemoryCacheOptions());
+            _controller = new HomeController(_fakeInstrumentService, _memoryCache);
         }
 
         [TearDown]
         public void TearDown()
         {
-            _context?.Database.EnsureDeleted();
-            _context?.Dispose();
-        }
-
-        [Test]
-        public void All_ReturnsViewWithCorrectModel()
-        {
-            var query = new AllInstrumentsQueryModels();
-
-            var result = _controller.All(query) as ViewResult;
-
-            Assert.IsNotNull(result);
-            var model = result.Model as AllInstrumentsQueryModels;
-            Assert.IsNotNull(model);
-            Assert.AreEqual(0, model.TotalInstruments);
-        }
-
-        [Test]
-        public void Mine_ReturnsViewWithUserInstruments()
-        {
-            var result = _controller.Mine() as ViewResult;
-
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOf<List<InstrumentServiceModel>>(result.Model);
-        }
-
-        [Test]
-        public void Add_Get_WithNonDealerUserRedirectsToBecome()
-        {
-            _dealerService.IsDealerResult = false;
-
-            var result = _controller.Add() as RedirectToActionResult;
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual("Become", result.ActionName);
-            Assert.AreEqual("Dealers", result.ControllerName);
-        }
-
-        [Test]
-        public void Add_Post_InvalidCategory_ReturnsViewWithErrors()
-        {
-            _dealerService.DealerIdResult = 1;
-            _instrumentService.CategoryExistsResult = false;
-
-            var formModel = new InstrumentsFormModel
+            if (_controller is IDisposable disposable)
             {
-                Brand = "Yamaha",
-                Model = "FG800",
-                Description = "Acoustic guitar",
-                ImageUrl = "https://example.com/img.jpg",
-                Year = 2022,
-                CategoryId = 999
+                disposable.Dispose();
+            }
+
+            _memoryCache.Dispose();
+        }
+
+
+        [Test]
+        public void Index_WhenCacheIsEmpty_CallsServiceAndReturnsData()
+        {
+            var result = _controller.Index() as ViewResult;
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOf<List<LatestInstrumentServiceModel>>(result.Model);
+
+            var model = (List<LatestInstrumentServiceModel>)result.Model;
+            Assert.AreEqual(1, model.Count);
+            Assert.AreEqual("Yamaha", model[0].Brand);
+
+            var cached = _memoryCache.Get<List<LatestInstrumentServiceModel>>(WebConstants.LatestInstrumentsCacheKey);
+            Assert.IsNotNull(cached);
+            Assert.AreEqual("Yamaha", cached[0].Brand);
+            Assert.AreEqual(1, _fakeInstrumentService.LatestCalledCount);
+        }
+
+        [Test]
+        public void Index_WhenCacheHasData_DoesNotCallService()
+        {
+            var cachedData = new List<LatestInstrumentServiceModel>
+            {
+                new LatestInstrumentServiceModel { Id = 2, Brand = "Fender", Model = "Strat" }
             };
 
-            var result = _controller.Add(formModel) as ViewResult;
+            _memoryCache.Set(WebConstants.LatestInstrumentsCacheKey, cachedData);
+
+            var result = _controller.Index() as ViewResult;
 
             Assert.IsNotNull(result);
-            Assert.IsFalse(_controller.ModelState.IsValid);
-            Assert.IsInstanceOf<InstrumentsFormModel>(result.Model);
+            Assert.IsInstanceOf<List<LatestInstrumentServiceModel>>(result.Model);
+
+            var model = (List<LatestInstrumentServiceModel>)result.Model;
+            Assert.AreEqual(1, model.Count);
+            Assert.AreEqual("Fender", model[0].Brand);
+            Assert.AreEqual(0, _fakeInstrumentService.LatestCalledCount);
         }
 
-        [TearDown]
-        public void Teardown()
+        [Test]
+        public void Error_ReturnsView()
         {
-            _controller.Dispose();
+            var result = _controller.Error() as ViewResult;
+            Assert.IsNotNull(result);
+        }
+
+        [Test]
+        public void Info_ReturnsView()
+        {
+            var result = _controller.Info() as ViewResult;
+            Assert.IsNotNull(result);
+        }
+
+        [Test]
+        public void ExtraInfo_ReturnsView()
+        {
+            var result = _controller.ExtraInfo() as ViewResult;
+            Assert.IsNotNull(result);
         }
 
         private class FakeInstrumentsService : IInstrumentsService
         {
-            public bool CategoryExistsResult = true;
-
-            public IEnumerable<string> AllBrands() => new List<string>();
-
-            public InstrumentQueryServiceModel All(string brand, string searchTerm, InstrumentSorting sorting, int currentPage, int instrumentsPerPage)
-                => new InstrumentQueryServiceModel { Instruments = new List<InstrumentServiceModel>(), TotalInstruments = 0 };
-
-            public IEnumerable<InstrumentCategoryServiceModel> AllCategories() => new List<InstrumentCategoryServiceModel>();
-
-            public IEnumerable<InstrumentServiceModel> ByUser(string userId) => new List<InstrumentServiceModel>();
-
-            public InstrumentDetailsServiceModel Details(int id) => new InstrumentDetailsServiceModel
-            {
-                Id = id,
-                Brand = "Test",
-                Model = "Test",
-                Description = "Test",
-                ImageUrl = "test.jpg",
-                Year = 2023,
-                DealerId = 1,
-                CategoryName = "Guitar"
-            };
-
-            public bool CategoryExists(int categoryId) => CategoryExistsResult;
-
-            public int Create(string brand, string model, string description, string imageUrl, int year, int categoryId, int dealerId) => 1;
-
-            public InstrumentQueryServiceModel All(string brand = null, string searchTerm = null, InstrumentSorting sorting = InstrumentSorting.DateCreated, int currentPage = 1, int instrumentsPerPage = int.MaxValue, bool publicOnly = true)
-            {
-                throw new NotImplementedException();
-            }
+            public int LatestCalledCount { get; private set; } = 0;
 
             public IEnumerable<LatestInstrumentServiceModel> Latest()
             {
-                throw new NotImplementedException();
+                LatestCalledCount++;
+                return new List<LatestInstrumentServiceModel>
+                {
+                    new LatestInstrumentServiceModel
+                    {
+                        Id = 1,
+                        Brand = "Yamaha",
+                        Model = "FG800"
+                    }
+                };
             }
 
-            public bool Edit(int carId, string brand, string model, string description, string imageUrl, int year, int categoryId, bool isPublic)
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool IsByDealer(int carId, int dealerId)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void ChangeVisility(int carId)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        private class FakeDealerService : IDealerService
-        {
-            public bool IsDealerResult = true;
-            public int DealerIdResult = 1;
-
-            public bool IsDealer(string userId) => IsDealerResult;
-
-            public int IdByUser(string userId) => DealerIdResult;
+            public IEnumerable<string> AllBrands() => throw new NotImplementedException();
+            public IEnumerable<InstrumentCategoryServiceModel> AllCategories() => throw new NotImplementedException();
+            public InstrumentQueryServiceModel All(string brand = null, string searchTerm = null, InstrumentSorting sorting = InstrumentSorting.DateCreated, int currentPage = 1, int instrumentsPerPage = int.MaxValue, bool publicOnly = true) => throw new NotImplementedException();
+            public IEnumerable<InstrumentServiceModel> ByUser(string userId) => throw new NotImplementedException();
+            public bool CategoryExists(int categoryId) => throw new NotImplementedException();
+            public int Create(string brand, string model, string description, string imageUrl, int year, int categoryId, int dealerId) => throw new NotImplementedException();
+            public InstrumentDetailsServiceModel Details(int id) => throw new NotImplementedException();
+            public bool Edit(int id, string brand, string model, string description, string imageUrl, int year, int categoryId, bool isPublic) => throw new NotImplementedException();
+            public bool IsByDealer(int id, int dealerId) => throw new NotImplementedException();
+            public void ChangeVisility(int id) => throw new NotImplementedException();
         }
     }
 }

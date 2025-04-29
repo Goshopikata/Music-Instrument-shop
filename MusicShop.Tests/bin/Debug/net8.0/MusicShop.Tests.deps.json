@@ -2841,7 +2841,10 @@
           "Microsoft.AspNetCore.Identity.UI": "6.0.29",
           "Microsoft.EntityFrameworkCore.InMemory": "6.0.29",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.29",
+          "Microsoft.NET.Test.Sdk": "17.8.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.16",
+          "NUnit": "3.14.0",
+          "NUnit3TestAdapter": "4.5.0",
           "Swashbuckle.AspNetCore": "6.5.0"
         },
         "runtime": {
