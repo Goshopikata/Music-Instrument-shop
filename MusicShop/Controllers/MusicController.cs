@@ -121,5 +121,9 @@ namespace MusicShop.Controllers
         {
             return View();
         }
+        public IActionResult Buy()
+        {
+            return View();
+        }
     }
 }

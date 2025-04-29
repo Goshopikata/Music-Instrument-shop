@@ -1,0 +1,94 @@
+﻿@{
+    ViewData["Title"] = "Payment";
+}
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow-lg p-5" style="max-width: 700px; width: 100%; border-radius: 20px; background-color: #f2f4f7;">
+        <h2 class="text-center mb-4 fw-bold">Complete Your Payment</h2>
+
+        <div class="btn-group w-100 mb-4" role="group">
+            <button type="button" id="cardBtn" class="btn btn-outline-primary active">Card</button>
+            <button type="button" id="cashBtn" class="btn btn-outline-secondary">Cash</button>
+        </div>
+
+        <form asp-controller="Music" asp-action="ThankYou" method="post" id="paymentForm" onsubmit="return validateForm();">
+            <input type="hidden" id="paymentType" name="paymentType" value="card" />
+            S
+            <div id="cardFields">
+                <div class="mb-3">
+                    <label for="cardName" class="form-label">Name on Card</label>
+                    <input type="text" class="form-control" id="cardName" name="cardName" placeholder="John Doe">
+                    <div class="invalid-feedback">Name on card is required.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="cardNumber" class="form-label">Card Number</label>
+                    <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456">
+                    <div class="invalid-feedback">Card number is required.</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="expiry" class="form-label">Expiry Date</label>
+                        <input type="text" class="form-control" id="expiry" name="expiry" placeholder="MM/YY">
+                        <div class="invalid-feedback">Expiry date is required.</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="cvv" class="form-label">CVV</label>
+                        <input type="text" class="form-control" id="cvv" name="cvv" placeholder="123">
+                        <div class="invalid-feedback">CVV is required.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="cashFields" class="d-none">
+                <div class="mb-3">
+                    <label for="cashAmount" class="form-label">How much are you bringing?</label>
+                    <input type="number" class="form-control" id="cashAmount" name="cashAmount" placeholder="Enter amount">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 mt-3">Pay Now</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const cardBtn = document.getElementById('cardBtn');
+        const cashBtn = document.getElementById('cashBtn');
+        const cardFields = document.getElementById('cardFields');
+        const cashFields = document.getElementById('cashFields');
+        const paymentType = document.getElementById('paymentType');
+
+        cardBtn.addEventListener('click', () => {
+            cardFields.classList.remove('d-none');
+            cashFields.classList.add('d-none');
+            cardBtn.classList.add('active');
+            cashBtn.classList.remove('active');
+            paymentType.value = "card";
+        });
+
+        cashBtn.addEventListener('click', () => {
+            cardFields.classList.add('d-none');
+            cashFields.classList.remove('d-none');
+            cashBtn.classList.add('active');
+            cardBtn.classList.remove('active');
+            paymentType.value = "cash";
+        });
+
+        function validateForm() {
+            if (paymentType.value === "cash") return true;
+
+            let valid = true;
+            ['cardName', 'cardNumber', 'expiry', 'cvv'].forEach(id => {
+                const input = document.getElementById(id);
+                if (input.value.trim() === '') {
+                    input.classList.add('is-invalid');
+                    valid = false;
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+            return valid;
+        }
+    </script>
+}
