@@ -116,5 +116,10 @@ namespace MusicShop.Controllers
 
             return RedirectToAction(nameof(Details), new { id = instrumentId, information = instrument.GetInformation() });
         }
+
+        public IActionResult ThankYou()
+        {
+            return View();
+        }
     }
 }
