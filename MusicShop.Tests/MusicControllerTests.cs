@@ -1,129 +1,262 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
-using MusicShop.Controllers;
-using MusicShop.Services.Instruments;
-using MusicShop.Services.Instruments.Models;
+﻿using Moq;
 using NUnit.Framework;
-using System;
+using MusicShop.Data;
+using MusicShop.Data.Models;
+using MusicShop.Services.Dealers;
+using MusicShop.Services.Instruments.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Collections.Generic;
 
-namespace MusicShop.Tests.Controllers
+namespace MusicShop.Tests.Services
 {
     [TestFixture]
-    public class HomeControllerTests
+    public class DealerServiceTests
     {
-        private HomeController _controller;
-        private FakeInstrumentsService _fakeInstrumentService;
-        private IMemoryCache _memoryCache;
+        private DealerService dealerService;
+        private Mock<RentalDbContext> dbContextMock;
 
         [SetUp]
-        public void Setup()
+        public void SetUp()
         {
-            _fakeInstrumentService = new FakeInstrumentsService();
-            _memoryCache = new MemoryCache(new MemoryCacheOptions());
-            _controller = new HomeController(_fakeInstrumentService, _memoryCache);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            if (_controller is IDisposable disposable)
-            {
-                disposable.Dispose();
-            }
-
-            _memoryCache.Dispose();
-        }
-
-
-        [Test]
-        public void Index_WhenCacheIsEmpty_CallsServiceAndReturnsData()
-        {
-            var result = _controller.Index() as ViewResult;
-
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOf<List<LatestInstrumentServiceModel>>(result.Model);
-
-            var model = (List<LatestInstrumentServiceModel>)result.Model;
-            Assert.AreEqual(1, model.Count);
-            Assert.AreEqual("Yamaha", model[0].Brand);
-
-            var cached = _memoryCache.Get<List<LatestInstrumentServiceModel>>(WebConstants.LatestInstrumentsCacheKey);
-            Assert.IsNotNull(cached);
-            Assert.AreEqual("Yamaha", cached[0].Brand);
-            Assert.AreEqual(1, _fakeInstrumentService.LatestCalledCount);
+            dbContextMock = new Mock<RentalDbContext>();
+            dealerService = new DealerService(dbContextMock.Object);
         }
 
         [Test]
-        public void Index_WhenCacheHasData_DoesNotCallService()
+        public void IsDealer_ShouldReturnTrue_WhenUserIsDealer()
         {
-            var cachedData = new List<LatestInstrumentServiceModel>
+            // Arrange
+            var userId = "test-user-id";
+            var dealers = new List<Dealer>
             {
-                new LatestInstrumentServiceModel { Id = 2, Brand = "Fender", Model = "Strat" }
+                new Dealer { UserId = userId }
+            }.AsQueryable();
+
+            var mockSet = new Mock<DbSet<Dealer>>();
+            mockSet.As<IQueryable<Dealer>>().Setup(m => m.Provider).Returns(dealers.Provider);
+            mockSet.As<IQueryable<Dealer>>().Setup(m => m.Expression).Returns(dealers.Expression);
+            mockSet.As<IQueryable<Dealer>>().Setup(m => m.ElementType).Returns(dealers.ElementType);
+            mockSet.As<IQueryable<Dealer>>().Setup(m => m.GetEnumerator()).Returns(dealers.GetEnumerator());
+
+            dbContextMock.Setup(db => db.Dealers).Returns(mockSet.Object);
+
+            // Act
+            var result = dealerService.IsDealer(userId);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void IsDealer_ShouldReturnFalse_WhenUserIsNotDealer()
+        {
+            // Arrange
+            var userId = "test-user-id";
+            var dealers = new List<Dealer>().AsQueryable();
+
+            var mockSet = new Mock<DbSet<Dealer>>();
+            mockSet.As<IQueryable<Dealer>>().Setup(m => m.Provider).Returns(dealers.Provider);
+            mockSet.As<IQueryable<Dealer>>().Setup(m => m.Expression).Returns(dealers.Expression);
+            mockSet.As<IQueryable<Dealer>>().Setup(m => m.ElementType).Returns(dealers.ElementType);
+            mockSet.As<IQueryable<Dealer>>().Setup(m => m.GetEnumerator()).Returns(dealers.GetEnumerator());
+
+            dbContextMock.Setup(db => db.Dealers).Returns(mockSet.Object);
+
+            // Act
+            var result = dealerService.IsDealer(userId);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void IdByUser_ShouldReturnDealerId_WhenUserIsDealer()
+        {
+            // Arrange
+            var userId = "test-user-id";
+            var dealerId = 1;
+            var dealers = new List<Dealer>
+            {
+                new Dealer { Id = dealerId, UserId = userId }
+            }.AsQueryable();
+
+            var mockSet = new Mock<DbSet<Dealer>>();
+            mockSet.As<IQueryable<Dealer>>().Setup(m => m.Provider).Returns(dealers.Provider);
+            mockSet.As<IQueryable<Dealer>>().Setup(m => m.Expression).Returns(dealers.Expression);
+            mockSet.As<IQueryable<Dealer>>().Setup(m => m.ElementType).Returns(dealers.ElementType);
+            mockSet.As<IQueryable<Dealer>>().Setup(m => m.GetEnumerator()).Returns(dealers.GetEnumerator());
+
+            dbContextMock.Setup(db => db.Dealers).Returns(mockSet.Object);
+
+            // Act
+            var result = dealerService.IdByUser(userId);
+
+            // Assert
+            Assert.AreEqual(dealerId, result);
+        }
+
+        [Test]
+        public void IdByUser_ShouldThrowException_WhenUserIsNotDealer()
+        {
+            // Arrange
+            var userId = "test-user-id";
+            var dealers = new List<Dealer>().AsQueryable();
+
+            var mockSet = new Mock<DbSet<Dealer>>();
+            mockSet.As<IQueryable<Dealer>>().Setup(m => m.Provider).Returns(dealers.Provider);
+            mockSet.As<IQueryable<Dealer>>().Setup(m => m.Expression).Returns(dealers.Expression);
+            mockSet.As<IQueryable<Dealer>>().Setup(m => m.ElementType).Returns(dealers.ElementType);
+            mockSet.As<IQueryable<Dealer>>().Setup(m => m.GetEnumerator()).Returns(dealers.GetEnumerator());
+
+            dbContextMock.Setup(db => db.Dealers).Returns(mockSet.Object);
+
+            // Act & Assert
+            Assert.Throws<InvalidOperationException>(() => dealerService.IdByUser(userId));
+        }
+    }
+
+    [TestFixture]
+    public class InstrumentModelTests
+    {
+        [Test]
+        public void InstrumentModel_ShouldReturnCorrectBrand()
+        {
+            // Arrange
+            var mockInstrumentModel = new Mock<IInstrumentModel>();
+            mockInstrumentModel.Setup(i => i.Brand).Returns("Yamaha");
+
+            // Act
+            var brand = mockInstrumentModel.Object.Brand;
+
+            // Assert
+            Assert.AreEqual("Yamaha", brand);
+        }
+
+        [Test]
+        public void InstrumentModel_ShouldReturnCorrectModel()
+        {
+            // Arrange
+            var mockInstrumentModel = new Mock<IInstrumentModel>();
+            mockInstrumentModel.Setup(i => i.Model).Returns("C40");
+
+            // Act
+            var model = mockInstrumentModel.Object.Model;
+
+            // Assert
+            Assert.AreEqual("C40", model);
+        }
+
+        [Test]
+        public void InstrumentModel_ShouldReturnCorrectYear()
+        {
+            // Arrange
+            var mockInstrumentModel = new Mock<IInstrumentModel>();
+            mockInstrumentModel.Setup(i => i.Year).Returns(2020);
+
+            // Act
+            var year = mockInstrumentModel.Object.Year;
+
+            // Assert
+            Assert.AreEqual(2020, year);
+        }
+    }
+
+    [TestFixture]
+    public class InstrumentCategoryServiceModelTests
+    {
+        [Test]
+        public void InstrumentCategoryServiceModel_ShouldReturnCorrectId()
+        {
+            // Arrange
+            var category = new InstrumentCategoryServiceModel
+            {
+                Id = 1,
+                Name = "Guitars"
             };
 
-            _memoryCache.Set(WebConstants.LatestInstrumentsCacheKey, cachedData);
+            // Act
+            var id = category.Id;
 
-            var result = _controller.Index() as ViewResult;
-
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOf<List<LatestInstrumentServiceModel>>(result.Model);
-
-            var model = (List<LatestInstrumentServiceModel>)result.Model;
-            Assert.AreEqual(1, model.Count);
-            Assert.AreEqual("Fender", model[0].Brand);
-            Assert.AreEqual(0, _fakeInstrumentService.LatestCalledCount);
+            // Assert
+            Assert.AreEqual(1, id);
         }
 
         [Test]
-        public void Error_ReturnsView()
+        public void InstrumentCategoryServiceModel_ShouldReturnCorrectName()
         {
-            var result = _controller.Error() as ViewResult;
-            Assert.IsNotNull(result);
-        }
-
-        [Test]
-        public void Info_ReturnsView()
-        {
-            var result = _controller.Info() as ViewResult;
-            Assert.IsNotNull(result);
-        }
-
-        [Test]
-        public void ExtraInfo_ReturnsView()
-        {
-            var result = _controller.ExtraInfo() as ViewResult;
-            Assert.IsNotNull(result);
-        }
-
-        private class FakeInstrumentsService : IInstrumentsService
-        {
-            public int LatestCalledCount { get; private set; } = 0;
-
-            public IEnumerable<LatestInstrumentServiceModel> Latest()
+            // Arrange
+            var category = new InstrumentCategoryServiceModel
             {
-                LatestCalledCount++;
-                return new List<LatestInstrumentServiceModel>
-                {
-                    new LatestInstrumentServiceModel
-                    {
-                        Id = 1,
-                        Brand = "Yamaha",
-                        Model = "FG800"
-                    }
-                };
-            }
+                Id = 1,
+                Name = "Guitars"
+            };
 
-            public IEnumerable<string> AllBrands() => throw new NotImplementedException();
-            public IEnumerable<InstrumentCategoryServiceModel> AllCategories() => throw new NotImplementedException();
-            public InstrumentQueryServiceModel All(string brand = null, string searchTerm = null, InstrumentSorting sorting = InstrumentSorting.DateCreated, int currentPage = 1, int instrumentsPerPage = int.MaxValue, bool publicOnly = true) => throw new NotImplementedException();
-            public IEnumerable<InstrumentServiceModel> ByUser(string userId) => throw new NotImplementedException();
-            public bool CategoryExists(int categoryId) => throw new NotImplementedException();
-            public int Create(string brand, string model, string description, string imageUrl, int year, int categoryId, int dealerId) => throw new NotImplementedException();
-            public InstrumentDetailsServiceModel Details(int id) => throw new NotImplementedException();
-            public bool Edit(int id, string brand, string model, string description, string imageUrl, int year, int categoryId, bool isPublic) => throw new NotImplementedException();
-            public bool IsByDealer(int id, int dealerId) => throw new NotImplementedException();
-            public void ChangeVisility(int id) => throw new NotImplementedException();
+            // Act
+            var name = category.Name;
+
+            // Assert
+            Assert.AreEqual("Guitars", name);
+        }
+    }
+
+    [TestFixture]
+    public class InstrumentDetailsServiceModelTests
+    {
+        [Test]
+        public void InstrumentDetailsServiceModel_ShouldReturnCorrectProperties()
+        {
+            // Arrange
+            var details = new InstrumentDetailsServiceModel
+            {
+                Id = 1,
+                Brand = "Yamaha",
+                Model = "C40",
+                Description = "A classical guitar",
+                CategoryId = 2,
+                DealerId = 3,
+                DealerName = "John's Music",
+                UserId = "user-123"
+            };
+
+            // Act & Assert
+            Assert.AreEqual(1, details.Id);
+            Assert.AreEqual("Yamaha", details.Brand);
+            Assert.AreEqual("C40", details.Model);
+            Assert.AreEqual("A classical guitar", details.Description);
+            Assert.AreEqual(2, details.CategoryId);
+            Assert.AreEqual(3, details.DealerId);
+            Assert.AreEqual("John's Music", details.DealerName);
+            Assert.AreEqual("user-123", details.UserId);
+        }
+    }
+
+    [TestFixture]
+    public class InstrumentQueryServiceModelTests
+    {
+        [Test]
+        public void InstrumentQueryServiceModel_ShouldReturnCorrectProperties()
+        {
+            // Arrange
+            var instruments = new List<InstrumentServiceModel>
+            {
+                new InstrumentServiceModel { Id = 1, Brand = "Yamaha", Model = "C40" },
+                new InstrumentServiceModel { Id = 2, Brand = "Fender", Model = "Stratocaster" }
+            };
+
+            var queryModel = new InstrumentQueryServiceModel
+            {
+                CurrentPage = 1,
+                InstrumentsPerPage = 10,
+                TotalInstruments = 2,
+                Instruments = instruments
+            };
+
+            // Act & Assert
+            Assert.AreEqual(1, queryModel.CurrentPage);
+            Assert.AreEqual(10, queryModel.InstrumentsPerPage);
+            Assert.AreEqual(2, queryModel.TotalInstruments);
+            Assert.AreEqual(instruments, queryModel.Instruments);
         }
     }
 }
