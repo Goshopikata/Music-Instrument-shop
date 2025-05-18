@@ -30,6 +30,8 @@
 
         public int CategoryId { get; init; }
 
+        public int Price { get; init; }
+
         public IEnumerable<InstrumentCategoryServiceModel> Categories { get; set; } = new List<InstrumentCategoryServiceModel>();
     }
 }

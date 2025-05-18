@@ -34,6 +34,8 @@ namespace MusicShop.Data.Models
 
         public int DealerId { get; init; }
 
+        public decimal Price { get; set; }
+
         public Dealer Dealer { get; init; } = null!;
         public ICollection<WishlistItem> wishlistItems { get; set; } = new List<WishlistItem>();
     }

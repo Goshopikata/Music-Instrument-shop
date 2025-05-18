@@ -42,7 +42,11 @@
                 </select>
                 <div asp-validation-for="CategoryId" class="custom-validation"></div>
             </div>
-
+            <div class="custom-group">
+                <label asp-for="Price" class="custom-label">Price</label>
+                <input asp-for="Price" class="custom-input" placeholder="0.00">
+                <div asp-validation-for="Price" class="custom-validation"></div>
+            </div>
             <button type="submit" class="custom-btn">Save</button>
         </form>
     </div>

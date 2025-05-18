@@ -117,6 +117,44 @@ namespace MusicShop.Tests.Services
     }
 
     [TestFixture]
+    public class LatestInstrumentServiceModelTests
+    {
+        [Test]
+        public void LatestInstrumentServiceModel_ShouldReturnCorrectProperties()
+        {
+            // Arrange
+            var latestInstrument = new LatestInstrumentServiceModel
+            {
+                Id = 1,
+                Brand = "Yamaha",
+                Model = "C40",
+                ImageUrl = "http://example.com/image.jpg",
+                Year = 2020
+            };
+
+            // Act & Assert
+            Assert.AreEqual(1, latestInstrument.Id);
+            Assert.AreEqual("Yamaha", latestInstrument.Brand);
+            Assert.AreEqual("C40", latestInstrument.Model);
+            Assert.AreEqual("http://example.com/image.jpg", latestInstrument.ImageUrl);
+            Assert.AreEqual(2020, latestInstrument.Year);
+        }
+    }
+
+    [TestFixture]
+    public class InstrumentSortingTests
+    {
+        [Test]
+        public void InstrumentSorting_ShouldHaveCorrectValues()
+        {
+            // Assert
+            Assert.AreEqual(0, (int)InstrumentSorting.DateCreated);
+            Assert.AreEqual(1, (int)InstrumentSorting.Year);
+            Assert.AreEqual(2, (int)InstrumentSorting.BrandAndModel);
+        }
+    }
+
+    [TestFixture]
     public class InstrumentModelTests
     {
         [Test]
@@ -257,6 +295,35 @@ namespace MusicShop.Tests.Services
             Assert.AreEqual(10, queryModel.InstrumentsPerPage);
             Assert.AreEqual(2, queryModel.TotalInstruments);
             Assert.AreEqual(instruments, queryModel.Instruments);
+        }
+    }
+
+    [TestFixture]
+    public class InstrumentServiceModelTests
+    {
+        [Test]
+        public void InstrumentServiceModel_ShouldReturnCorrectProperties()
+        {
+            // Arrange
+            var instrument = new InstrumentServiceModel
+            {
+                Id = 1,
+                Brand = "Yamaha",
+                Model = "C40",
+                ImageUrl = "http://example.com/image.jpg",
+                Year = 2020,
+                CategoryName = "Guitars",
+                IsPublic = true
+            };
+
+            // Act & Assert
+            Assert.AreEqual(1, instrument.Id);
+            Assert.AreEqual("Yamaha", instrument.Brand);
+            Assert.AreEqual("C40", instrument.Model);
+            Assert.AreEqual("http://example.com/image.jpg", instrument.ImageUrl);
+            Assert.AreEqual(2020, instrument.Year);
+            Assert.AreEqual("Guitars", instrument.CategoryName);
+            Assert.IsTrue(instrument.IsPublic);
         }
     }
 }

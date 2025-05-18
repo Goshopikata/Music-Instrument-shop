@@ -110,7 +110,8 @@ namespace MusicShop.Controllers
                 instrument.ImageUrl,
                 instrument.Year,
                 instrument.CategoryId,
-                dealerId);
+                dealerId, 
+                instrument.Price);
 
             TempData[GlobalMessageKey] = "You instrument was added and is awaiting for approval!";
 

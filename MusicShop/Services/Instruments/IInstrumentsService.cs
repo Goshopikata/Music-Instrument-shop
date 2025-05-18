@@ -24,7 +24,11 @@
             string imageUrl,
             int year,
             int categoryId,
-            int dealerId);
+            int dealerId, 
+            decimal price);
+
+
+
 
         bool Edit(
             int carId,
@@ -34,7 +38,8 @@
             string imageUrl,
             int year,
             int categoryId,
-            bool isPublic);
+            bool isPublic, 
+            decimal price);
 
         IEnumerable<InstrumentServiceModel> ByUser(string userId);
 

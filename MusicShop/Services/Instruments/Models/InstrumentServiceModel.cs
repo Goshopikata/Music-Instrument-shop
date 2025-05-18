@@ -15,5 +15,7 @@
         public string CategoryName { get; init; }
 
         public bool IsPublic { get; init; }
+
+        public decimal Price { get; init; }
     }
 }

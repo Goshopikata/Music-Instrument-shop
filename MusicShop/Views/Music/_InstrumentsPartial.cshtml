@@ -10,7 +10,7 @@
             <div class="custom-card">
                 <img class="custom-img" src="@instrument.ImageUrl" alt="@instrument.Brand @instrument.Model - @instrument.Year (@instrument.CategoryName)">
                 <div class="custom-card-body">
-                    <h5 class="custom-card-title">@instrument.Year @instrument.Brand @instrument.Model (@instrument.CategoryName)</h5>
+                    <h5 class="custom-card-title">@instrument.Year @instrument.Brand @instrument.Model (@instrument.CategoryName) @instrument.Price</h5>
                     <div class="custom-btn-container">
                         <a asp-controller="Music" asp-action="Details" asp-route-id="@instrument.Id" asp-route-information="@instrument.GetInformation()" class="custom-btn">View</a>
                     </div>

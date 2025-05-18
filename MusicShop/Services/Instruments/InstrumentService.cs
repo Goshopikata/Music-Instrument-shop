@@ -84,7 +84,7 @@
                 .FirstOrDefault();
         }
 
-        public int Create(string brand, string model, string description, string imageUrl, int year, int categoryId, int dealerId)
+        public int Create(string brand, string model, string description, string imageUrl, int year, int categoryId, int dealerId, decimal price)
         {
             var car = new Instrument
             {
@@ -95,7 +95,8 @@
                 Year = year,
                 CategoryId = categoryId,
                 DealerId = dealerId,
-                IsPublic = false
+                IsPublic = false,
+                Price = price
             };
 
             _context.Instruments.Add(car);
@@ -104,7 +105,7 @@
             return car.Id;
         }
 
-        public bool Edit(int id, string brand, string model, string description, string imageUrl, int year, int categoryId, bool isPublic)
+        public bool Edit(int id, string brand, string model, string description, string imageUrl, int year, int categoryId, bool isPublic, decimal price)
         {
             var car = _context.Instruments.Find(id);
 
@@ -118,6 +119,7 @@
             car.Year = year;
             car.CategoryId = categoryId;
             car.IsPublic = isPublic;
+            car.Price = price;
 
             _context.SaveChanges();
 
